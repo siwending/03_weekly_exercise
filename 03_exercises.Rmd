@@ -341,6 +341,14 @@ In this dataset, it can be seen that for casual type users, most of the rides ar
 This problem uses the data from the Tidy Tuesday competition this week, `kids`. If you need to refresh your memory on the data, read about it [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-15/readme.md). 
 
   21. In this exercise, you are going to try to replicate the graph below, created by Georgios Karamanis. I'm sure you can find the exact code on GitHub somewhere, but **DON'T DO THAT!** You will only be graded for putting an effort into this problem. So, give it a try and see how far you can get without doing too much googling. HINT: use `facet_geo()`. The graphic won't load below since it came from a location on my computer. So, you'll have to reference the original html on the moodle page to see it.
-  
+
+```{r}
+kids %>% 
+  group_by(state,year) %>% 
+  summarise(raw_total_spending=sum(raw)) %>% 
+  ggplot(aes(x=year,y=raw_total_spending))+
+    facet_geo(~state)+
+    geom_line()
+```
 
 **DID YOU REMEMBER TO UNCOMMENT THE OPTIONS AT THE TOP?**
