@@ -149,7 +149,7 @@ garden_harvest %>%
   arrange(first_harvest_date) %>%  # sort by first_harvest_date => from earliest to latest
   ggplot(aes(y=reorder(variety, first_harvest_date),x=total_weight_lbs))+ # plot
     geom_col()+
-    labs(y="variety (from smallest to largest by first harvest date)") # label
+    labs(y="variety (from smallest to largest by first harvest date)", title="total harvest in pounds for each variety") # label
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
@@ -228,7 +228,8 @@ It's natural to expect that bikes are rented more at some times of day, some day
 ```r
 Trips %>% 
   ggplot(aes(x=sdate))+
-    geom_density()
+    geom_density()+
+    labs(x="rent start date", title="A density plot for bike rent start day")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
@@ -240,7 +241,8 @@ Trips %>%
 Trips %>% 
   mutate(time=hour(sdate)+minute(sdate)/60) %>% 
   ggplot(aes(x=time))+
-    geom_density()
+    geom_density()+
+    labs(x="rent start time", title="A density plot for bike rent start time")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
@@ -252,7 +254,8 @@ Trips %>%
 Trips %>% 
   mutate(day=wday(sdate, label=TRUE)) %>% 
   ggplot(aes(y=day))+
-  geom_bar()
+  geom_bar()+
+  labs(title="Number of rent events versus day of the week")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
@@ -266,7 +269,8 @@ Trips %>%
   mutate(day=wday(sdate, label=TRUE)) %>% 
   ggplot(aes(x=time))+
     geom_density()+
-    facet_wrap(~day)
+    facet_wrap(~day)+
+    labs(title="density plots for bike rent start time by day of the week")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
@@ -282,7 +286,8 @@ Trips %>%
   mutate(time=hour(sdate)+minute(sdate)/60) %>% 
   mutate(day=wday(sdate, label=TRUE)) %>% 
   ggplot(aes(x=time, fill=client))+
-    geom_density(alpha=.5, color=NA)
+    geom_density(alpha=.5, color=NA)+
+    labs(title="density plots for bike rent start time by client type")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
@@ -295,7 +300,8 @@ Trips %>%
   mutate(time=hour(sdate)+minute(sdate)/60) %>% 
   mutate(day=wday(sdate, label=TRUE)) %>% 
   ggplot(aes(x=time, fill=client))+
-    geom_density(alpha=.5, color=NA, position=position_stack())
+    geom_density(alpha=.5, color=NA, position=position_stack())+
+    labs(title="density plots for bike rent start time by client type (stack)")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
@@ -311,7 +317,8 @@ Trips %>%
   mutate(weekend=ifelse(day>5, "weekend", "weekday")) %>% 
   ggplot(aes(x=time, fill=client))+
     geom_density(alpha=.5, color=NA)+
-    facet_wrap(~weekend)
+    facet_wrap(~weekend)+
+    labs(title="density plots for bike rent start time by client type and weekday vs. weekend")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
@@ -326,7 +333,8 @@ Trips %>%
   mutate(weekend=ifelse(day>5, "weekend", "weekday")) %>% 
   ggplot(aes(x=time, fill=weekend))+
     geom_density(alpha=.5, color=NA)+
-    facet_wrap(~client)
+    facet_wrap(~client)+
+    labs(title="density plots for bike rent start time by client type and weekday vs. weekend")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
@@ -343,7 +351,8 @@ Stations %>%
   group_by(name, long, lat) %>% 
   summarise(n_trips=n()) %>% 
   ggplot(aes(y=long,x=lat,color=n_trips))+
-    geom_point()
+    geom_point()+
+    labs(title="Number of events at each location")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
@@ -358,7 +367,8 @@ Stations %>%
   summarise(n_trips=n(), n_casual=sum(client=="Casual")) %>% 
   mutate(is_casual_higher=n_casual/n_trips > 0.5) %>% 
   ggplot(aes(y=long,x=lat,color=is_casual_higher))+
-    geom_point()
+    geom_point()+
+    labs(title="major User type for at each location")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
@@ -439,14 +449,26 @@ In this dataset, it can be seen that for casual type users, most of the rides ar
 
   20. Below, provide a link to your GitHub page with this set of Weekly Exercises. Specifically, if the name of the file is 03_exercises.Rmd, provide a link to the 03_exercises.md file, which is the one that will be most readable on GitHub.
   
-  
-  https://github.com/siwending/3rd_weekly_exercise/blob/master/03_exercises.md
+  https://github.com/siwending/03_weekly_exercise/blob/master/03_exercises.md
+  (Some of the tables which can be shown in the html output cannot be shown in the md file on github. Some of the tables are replaced with some "<scripts>" things, which I can't figure out how to display it correctly.)
 
 ## Challenge problem! 
 
 This problem uses the data from the Tidy Tuesday competition this week, `kids`. If you need to refresh your memory on the data, read about it [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-15/readme.md). 
 
   21. In this exercise, you are going to try to replicate the graph below, created by Georgios Karamanis. I'm sure you can find the exact code on GitHub somewhere, but **DON'T DO THAT!** You will only be graded for putting an effort into this problem. So, give it a try and see how far you can get without doing too much googling. HINT: use `facet_geo()`. The graphic won't load below since it came from a location on my computer. So, you'll have to reference the original html on the moodle page to see it.
-  
+
+
+```r
+kids %>% 
+  group_by(state,year) %>% 
+  summarise(raw_total_spending=sum(raw)) %>% 
+  ggplot(aes(x=year,y=raw_total_spending))+
+    facet_geo(~state)+
+    geom_line()+
+    labs(title="change of spending on kids over time by states")
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
 
 **DID YOU REMEMBER TO UNCOMMENT THE OPTIONS AT THE TOP?**
