@@ -333,8 +333,8 @@ In this dataset, it can be seen that for casual type users, most of the rides ar
 
   20. Below, provide a link to your GitHub page with this set of Weekly Exercises. Specifically, if the name of the file is 03_exercises.Rmd, provide a link to the 03_exercises.md file, which is the one that will be most readable on GitHub.
   
-  
-  https://github.com/siwending/3rd_weekly_exercise/blob/master/03_exercises.md
+  https://github.com/siwending/03_weekly_exercise/blob/master/03_exercises.md
+  (Some of the tables which can be shown in the html output cannot be shown in the md file on github. Some of the tables are replaced with some "<scripts>" things, which I can't figure out how to display it correctly.)
 
 ## Challenge problem! 
 
